@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_firebase_practice/flutter_demo_hp.dart';
 import 'package:flutter_firebase_practice/sign_in.dart';
 import 'package:flutter_firebase_practice/sign_up.dart';
 import 'package:flutter/material.dart';
@@ -30,84 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         ),
-        home: const SignIn(/*title:'Firebase Tutorial'*/),
+        home: const FlutterDemoHp(/*title:'Firebase Tutorial'*/),
       );
     }
-}
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool _isSignedIn = false;
-
-  void checkSignInState(){
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        setState (() {_isSignedIn = false;});
-      } else {
-        setState(() {
-          _isSignedIn = true;
-        });
-      }
-      });
-    }
- @override
- void initState(){
-  super.initState();
-  checkSignInState();
- }
-
- @override
- Widget build(BuildContext context) {
-  return Scaffold(
-    body: Center(
-      child:Container (
-        child:Text('ログイン成功！'),
-      )
-    ),
-  );
-}
-  /*const MyHomePage ({Key? key,required this.title}) : super (key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  void addUser()async{
-    await FirebaseFirestore.instance.collection('users').doc('user3').set({
-     'id':'user3',
-      'name':'arata',
-     'age':'29'
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar : AppBar(
-        title:Text(widget.title)
-    ),
-      body:Center(
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:<Widget>[
-            ElevatedButton(
-              onPressed: (){addUser();},
-              child:const Text('ユーザー設定',style: TextStyle(color: Colors.white),),
-              style:ButtonStyle (
-                padding:MaterialStateProperty.all(const EdgeInsets.all(20)),
-                shape:MaterialStateProperty.all(RoundedRectangleBorder(borderRadius:BorderRadius.circular(15)))
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
 }
