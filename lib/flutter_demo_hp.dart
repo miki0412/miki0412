@@ -83,7 +83,6 @@ class _FlutterDemoHpState extends State<FlutterDemoHp> {
                   onPressed: (){
                     setState((){
                       c = a - b;
-                      print(c);
                     });
                   },
                  ),

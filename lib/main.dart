@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_firebase_practice/flutter_demo_hp.dart';
+import 'package:flutter_firebase_practice/registration.dart';
 import 'package:flutter_firebase_practice/sign_in.dart';
 import 'package:flutter_firebase_practice/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_practice/sns_practice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +34,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
         ),
-        home: const FlutterDemoHp(/*title:'Firebase Tutorial'*/),
+        home: SnsPractice(/*title:'Firebase Tutorial'*/),
       );
     }
 }
