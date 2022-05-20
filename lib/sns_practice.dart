@@ -61,15 +61,14 @@ class _SnsPracticeState extends State<SnsPractice> {
                   onPressed: ()async{
                     try {
                       final FirebaseAuth auth = FirebaseAuth.instance;
-                      final UserCredential result =
-                          await auth.signInWithEmailAndPassword(
+                      await auth.signInWithEmailAndPassword(
                         email: email,
                         password: password,
                       );
                        await Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) {
-                            return PostPage(result.user!);
+                            return PostPage();
                           })
                       );
                     }catch (e){

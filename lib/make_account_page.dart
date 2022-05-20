@@ -1,9 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_firebase_practice/post_page.dart';
 import 'package:flutter_firebase_practice/sns_practice.dart';
 
 class MakeAccountPage extends StatefulWidget {
@@ -16,15 +13,18 @@ class _MakeAccountPageState extends State<MakeAccountPage> {
 
   String newemail = "";
   String newpassword = "";
+  String username = "";
 
   void hendleSignUp()async {
     UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: newemail,
-        password: newpassword);
+        password: newpassword,
+    );
     User user = userCredential.user!;
     FirebaseFirestore.instance.collection('users').doc(user.uid).set({
       'id': user.uid,
-      'mail': user.email
+      'mail': user.email,
+      'username': username,
     });
   }
 
@@ -65,6 +65,17 @@ class _MakeAccountPageState extends State<MakeAccountPage> {
                       },
                     )
                 ),
+               SizedBox(height: 50),
+               Flexible(
+                   child: TextField(
+                     decoration: const InputDecoration(labelText: 'ユーザー名を入力してください',border: OutlineInputBorder(),),
+                     onChanged: (String value) {
+                       setState(() {
+                         username = value;
+                       });
+                     },
+                   )
+               ),
             SizedBox(height:50,),
             ElevatedButton(
               onPressed: () {hendleSignUp();},
