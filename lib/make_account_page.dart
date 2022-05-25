@@ -21,9 +21,9 @@ class _MakeAccountPageState extends State<MakeAccountPage> {
         password: newpassword,
     );
     User user = userCredential.user!;
-    FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-      'id': user.uid,
-      'mail': user.email,
+    await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+      'id':user.uid,
+      'mail': newemail,
       'username': username,
     });
   }
@@ -79,8 +79,7 @@ class _MakeAccountPageState extends State<MakeAccountPage> {
             SizedBox(height:50,),
             ElevatedButton(
               onPressed: () {hendleSignUp();},
-              child:Text('アカウント作成'),
-            ),
+              child:Text('アカウント作成'),),
             SizedBox(height:50,),
             TextButton(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) {return SnsPractice();})),

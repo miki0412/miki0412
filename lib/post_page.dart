@@ -1,9 +1,6 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_practice/make_account_page.dart';
 
 class PostPage extends StatefulWidget {
 
@@ -14,7 +11,23 @@ class _PostPageState extends State<PostPage> {
 
   final postPageController = TextEditingController();
   final Stream<QuerySnapshot> userStream = FirebaseFirestore.instance.collection('posts').orderBy('timestamp').snapshots();
-  final userId = FirebaseAuth.instance.currentUser!.uid;
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  late String userName;
+
+  getUserName()async{
+    DocumentSnapshot userDocument = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    Map<String, dynamic> userData= userDocument.data()! as Map<String, dynamic>;
+    userName = userData['username'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //初期化時に一度だけ呼ばれるメソッド
+    //上記の２コードの後に処理をかく
+    getUserName();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +55,9 @@ class _PostPageState extends State<PostPage> {
                                itemBuilder: (BuildContext context,int index) {
                                  Map<String, dynamic> userData = usersData[index].data()! as Map<String, dynamic>;
                                  return Card(
+                                   color:userData['content'] == userName ?
+                                   Colors.lime
+                                   : Colors.white,
                                   child:ListTile(
                                     title: Text('${userData['content']}'),
                                     subtitle: Text('${userData['comment']}'),
@@ -70,17 +86,7 @@ class _PostPageState extends State<PostPage> {
                              await FirebaseFirestore.instance.collection('posts').doc().set(
                                  {
                                    'comment': postPageController.text,
-                                   'content':
-                                     StreamBuilder<DocumentSnapshot>(
-                                      stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
-                                      builder:(BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                        if (snapshot.hasData) {
-                                          return Text(snapshot.data!['username']);
-                                        } else {
-                                          return Container();
-                                        }
-                                      }
-                                    ),
+                                   'content': userName,
                                    'timestamp': FieldValue.serverTimestamp(),
                                  });
                              postPageController.clear();
