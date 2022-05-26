@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_practice/sns_practice.dart';
 
 class PostPage extends StatefulWidget {
 
@@ -36,6 +37,19 @@ class _PostPageState extends State<PostPage> {
         title: const Text('投稿', style: TextStyle(color: Color(0xffeeeeee),
           fontSize: 20,
           fontWeight: FontWeight.bold),),
+        actions: [
+          IconButton(
+              onPressed:() async {
+                await FirebaseAuth.instance.signOut();
+                await Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) {
+                    return SnsPractice();
+                  })
+                );
+              },
+              icon: Icon(Icons.logout),
+          )
+        ],
       ),
           body:Center (
              child:SizedBox(
@@ -61,7 +75,16 @@ class _PostPageState extends State<PostPage> {
                                   child:ListTile(
                                     title: Text('${userData['content']}'),
                                     subtitle: Text('${userData['comment']}'),
-                                  ),);
+                                    trailing: userData['content'] == userName ?
+                                    IconButton(
+                                        onPressed: () async {
+                                          await FirebaseFirestore.instance.collection('posts').doc(userId).delete();
+                                        },
+                                        icon: Icon(Icons.delete),
+                                    )
+                                    :null,
+                                  ),
+                                 );
                                },
                                separatorBuilder: (BuildContext context, int index) => const Divider(),
                              );

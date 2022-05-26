@@ -12,6 +12,7 @@ class SnsPractice extends StatefulWidget {
 
 class _SnsPracticeState extends State<SnsPractice> {
 
+  String infoText = "";
   String email = "";
   String password = "";
 
@@ -69,11 +70,11 @@ class _SnsPracticeState extends State<SnsPractice> {
                         MaterialPageRoute(
                           builder: (context) {
                             return PostPage();
-                          })
+                          }),
                       );
                     }catch (e){
                       setState(() {
-                        'ログインに失敗しました:${e.toString()}';
+                        infoText = 'ログインに失敗しました:${e.toString()}';
                       });
                     }
                   },
