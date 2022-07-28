@@ -88,8 +88,7 @@ class _SnsPracticeState extends State<SnsPractice> {
                         builder:(context) {
                           return MakeAccountPage();
                       })
-                  );
-                },
+                   );},
                   child:Text('アカウントをお持ちでない方はこちらから'),
               ),
             ],

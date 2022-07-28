@@ -77,10 +77,10 @@ class _PostPageState extends State<PostPage> {
                                     subtitle: Text('${userData['comment']}'),
                                     trailing: userData['content'] == userName ?
                                     IconButton(
-                                        onPressed: () async {
-                                          await FirebaseFirestore.instance.collection('posts').doc(userId).delete();
-                                        },
                                         icon: Icon(Icons.delete),
+                                        onPressed: () async {
+                                          await FirebaseFirestore.instance.collection('posts').doc(userData[userId]).delete();
+                                        },
                                     )
                                     :null,
                                   ),
